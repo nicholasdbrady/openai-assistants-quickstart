@@ -1,3 +1,4 @@
+// (assistants) route.ts
 import { openai } from "@/app/openai";
 
 export const runtime = "nodejs";
@@ -7,7 +8,7 @@ export async function POST() {
   const assistant = await openai.beta.assistants.create({
     instructions: "You are a helpful assistant.",
     name: "Quickstart Assistant",
-    model: "gpt-4o",
+    model: process.env.AZURE_OPENAI_DEPLOYMENT_NAME, // Use deployment name
     tools: [
       { type: "code_interpreter" },
       {
@@ -20,7 +21,7 @@ export async function POST() {
             properties: {
               location: {
                 type: "string",
-                description: "The city and state e.g. San Francisco, CA",
+                description: "The city and state e.g. Redmond, WA",
               },
               unit: {
                 type: "string",
